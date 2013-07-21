@@ -3,6 +3,7 @@ package to.us.dimkas;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Random;
 
 /**
  * Created with IntelliJ IDEA.
@@ -59,6 +60,31 @@ public class Field {
         System.out.println("Enter y(1-3):");
         y = Integer.parseInt(br.readLine()) - 1;
 
+        while (field[x][y] == 'X' || field[x][y] == 'O') {
+            System.out.println("wrong cell!! \n Enter x:");
+            x = Integer.parseInt(br.readLine());
+            System.out.println("Enter y:");
+            y = Integer.parseInt(br.readLine());
+        }
         setCellValue(x, y, 'X');
+
+        machineMove();
+    }
+
+    private void machineMove() {
+        Random rnd = new Random();
+        int x = rnd.nextInt(3);
+        int y = rnd.nextInt(3);
+        while (field[x][y] == 'X' || field[x][y] == 'O') {
+            x = rnd.nextInt(3);
+            y = rnd.nextInt(3);
+        }
+        setCellValue(x, y, 'O');
+        showField();
+        try {
+            humanMove();
+        } catch (IOException e) {
+            //
+        }
     }
 }
