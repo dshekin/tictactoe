@@ -1,5 +1,9 @@
 package to.us.dimkas;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 /**
  * Created with IntelliJ IDEA.
  * User: dimkas
@@ -20,7 +24,7 @@ public class Field {
 
     private void eraseLine(int lineNumber) {
         for (int i = 0; i < FIELD_SIZE; i++) {
-            field[i][lineNumber] = DEFAULT_FIELD_VALUE;
+            setCellValue(i, lineNumber, DEFAULT_FIELD_VALUE);
         }
     }
 
@@ -41,5 +45,20 @@ public class Field {
             System.out.println();
         }
         System.out.println();
+    }
+
+    private void setCellValue(int x, int y, char value) {
+        field[x][y] = value;
+    }
+
+    public void humanMove() throws IOException {
+        int x, y;
+        System.out.println("Enter x(1-3):");
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        x = Integer.parseInt(br.readLine()) - 1;
+        System.out.println("Enter y(1-3):");
+        y = Integer.parseInt(br.readLine()) - 1;
+
+        setCellValue(x, y, 'X');
     }
 }
