@@ -34,7 +34,7 @@ public class Field {
     }
 
     private void showLine(int lineNumber) {
-        for (int i = 0; i <FIELD_SIZE; i++) {
+        for (int i = 0; i < FIELD_SIZE; i++) {
             showCell(i, lineNumber);
         }
     }
@@ -72,19 +72,59 @@ public class Field {
     }
 
     private void machineMove() {
-        Random rnd = new Random();
-        int x = rnd.nextInt(3);
-        int y = rnd.nextInt(3);
-        while (field[x][y] == 'X' || field[x][y] == 'O') {
-            x = rnd.nextInt(3);
-            y = rnd.nextInt(3);
-        }
-        setCellValue(x, y, 'O');
-        showField();
-        try {
-            humanMove();
-        } catch (IOException e) {
-            //
+        if (canMove()) {
+            Random rnd = new Random();
+            int x = rnd.nextInt(3);
+            int y = rnd.nextInt(3);
+            while (field[x][y] == 'X' || field[x][y] == 'O') {
+                x = rnd.nextInt(3);
+                y = rnd.nextInt(3);
+            }
+            setCellValue(x, y, 'O');
+            showField();
+            try {
+                humanMove();
+            } catch (IOException e) {
+                //
+            }
+        } else {
+            System.out.println("No more moves");
+            showField();
         }
     }
+
+    private boolean canMove() {
+        boolean p = false;
+        for (int i = 0; i < FIELD_SIZE; i++) {
+            for (int j = 0; j < FIELD_SIZE; j++) {
+                if (field[i][j] == ' ') {
+                    p = true;
+                    return p;
+                }
+            }
+        }
+        return p;
+    }
+
+    private void clearConsole()
+    {
+        try
+        {
+            String os = System.getProperty("os.name");
+
+            if (os.contains("Windows"))
+            {
+                Runtime.getRuntime().exec("cls");
+            }
+            else
+            {
+                Runtime.getRuntime().exec("clear");
+            }
+        }
+        catch (Exception exception)
+        {
+            //  Handle exception.
+        }
+    }
+
 }

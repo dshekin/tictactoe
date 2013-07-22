@@ -1,5 +1,7 @@
 package to.us.dimkas;
 
+import java.io.IOException;
+
 /**
  * Created with IntelliJ IDEA.
  * User: dimkas
@@ -9,6 +11,16 @@ package to.us.dimkas;
  */
 public class Main {
     public static void main(String arg[]) {
+        Field field = new Field();
+        field.eraseField();
+        field.showField();
+        try {
+            field.humanMove();
+
+        } catch(IOException ioe){
+            //Handle exception here, most of the time you will just log it.
+        }
+//        field.showField();
 
     }
 }
