@@ -13,18 +13,29 @@ import java.util.Random;
  * To change this template use File | Settings | File Templates.
  */
 public class Field {
-    public static int FIELD_SIZE = 3;
-    public static char DEFAULT_FIELD_VALUE = ' ';
-    private char[][] field = new char[FIELD_SIZE][FIELD_SIZE];
+    private static final char DEFAULT_FIELD_VALUE = ' ';
+    private static final char X_CHAR = 'X';
+    private static final char O_CHAR = 'O';
+    private int fieldSize;
+    private char[][] field;
+
+    Field() {
+        this(3);
+    }
+
+    Field(int size) {
+        fieldSize = size;
+        field  = new char[fieldSize][fieldSize];
+    }
 
     public void eraseField() {
-        for (int i = 0; i < FIELD_SIZE; i++) {
+        for (int i = 0; i < fieldSize; i++) {
             eraseLine(i);
         }
     }
 
     private void eraseLine(int lineNumber) {
-        for (int i = 0; i < FIELD_SIZE; i++) {
+        for (int i = 0; i < fieldSize; i++) {
             setCellValue(i, lineNumber, DEFAULT_FIELD_VALUE);
         }
     }
@@ -34,14 +45,14 @@ public class Field {
     }
 
     private void showLine(int lineNumber) {
-        for (int i = 0; i < FIELD_SIZE; i++) {
+        for (int i = 0; i < fieldSize; i++) {
             showCell(i, lineNumber);
         }
     }
 
     public void showField() {
         System.out.println();
-        for (int i = 0; i < FIELD_SIZE; i++) {
+        for (int i = 0; i < fieldSize; i++) {
             showLine(i);
             System.out.println();
         }
@@ -60,13 +71,13 @@ public class Field {
         System.out.println("Enter y(1-3):");
         y = Integer.parseInt(br.readLine()) - 1;
 
-        while (field[x][y] == 'X' || field[x][y] == 'O') {
+        while (field[x][y] == X_CHAR || field[x][y] == O_CHAR) {
             System.out.println("wrong cell!! \n Enter x:");
             x = Integer.parseInt(br.readLine());
             System.out.println("Enter y:");
             y = Integer.parseInt(br.readLine());
         }
-        setCellValue(x, y, 'X');
+        setCellValue(x, y, X_CHAR);
 
         machineMove();
     }
@@ -76,11 +87,11 @@ public class Field {
             Random rnd = new Random();
             int x = rnd.nextInt(3);
             int y = rnd.nextInt(3);
-            while (field[x][y] == 'X' || field[x][y] == 'O') {
+            while (field[x][y] == X_CHAR || field[x][y] == O_CHAR) {
                 x = rnd.nextInt(3);
                 y = rnd.nextInt(3);
             }
-            setCellValue(x, y, 'O');
+            setCellValue(x, y, O_CHAR);
             showField();
             try {
                 humanMove();
@@ -95,8 +106,8 @@ public class Field {
 
     private boolean canMove() {
         boolean p = false;
-        for (int i = 0; i < FIELD_SIZE; i++) {
-            for (int j = 0; j < FIELD_SIZE; j++) {
+        for (int i = 0; i < fieldSize; i++) {
+            for (int j = 0; j < fieldSize; j++) {
                 if (field[i][j] == ' ') {
                     p = true;
                     return p;
@@ -106,6 +117,8 @@ public class Field {
         return p;
     }
 
+
+    //not used
     private void clearConsole()
     {
         try
